@@ -7,6 +7,8 @@ import numpy as np
 import pickle
 from nltk.stem import WordNetLemmatizer
 import nltk
+nltk.download('omw-1.4')
+
 
 nltk.download('punkt')
 nltk.download('wordnet')
