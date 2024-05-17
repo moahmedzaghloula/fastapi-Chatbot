@@ -5,16 +5,23 @@ import json
 from keras.models import load_model
 import numpy as np
 import pickle
+from fastapi.middleware.cors import CORSMiddleware
 from nltk.stem import WordNetLemmatizer
 import nltk
 nltk.download('omw-1.4')
-
-
 nltk.download('punkt')
 nltk.download('wordnet')
+app = FastAPI()
 
 lemmatizer = WordNetLemmatizer()
 model = load_model('model.h5')
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_origins=['*']
+)
 
 with open('data.json', 'r', encoding='utf-8') as file:
     intents = json.load(file)
@@ -63,7 +70,7 @@ def chatbot_response(msg):
     res = getResponse(ints, intents)
     return res
 
-app = FastAPI()
+
 
 class Message(BaseModel):
     msg: str
